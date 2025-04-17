@@ -5,9 +5,11 @@ import java.util.List;
 /**
  * Interface représentant un graphe.
  * 
- * Elle n'impose qu'une unique méthode permettant de programmer un plus court chemin.
+ * Elle n'impose qu'une unique méthode permettant de programmer un plus court
+ * chemin.
  *
- * @param <T> Identifiant des sommets. Le type doit disposer d'une méthode hashcode.
+ * @param <T> Identifiant des sommets. Le type doit disposer d'une méthode
+ *            hashcode.
  */
 public interface Graph<T> {
 	/**
