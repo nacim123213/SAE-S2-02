@@ -1,0 +1,44 @@
+package dijkstra;
+
+import graph.Graph;
+import graph.ShortestPath;
+import graph.ShortestPath.Distances;
+
+import java.util.*;
+
+public class Dijkstra<T> implements ShortestPath<T> {
+
+    @Override
+    public Distances<T> compute(Graph<T> graphe, T source, Animateur<T> animateur) {
+        Map<T, Integer> distances = new HashMap<>();
+        Map<T, T> predecesseurs = new HashMap<>();
+        Set<T> visites = new HashSet<>();
+        PriorityQueue<T> file = new PriorityQueue<>(Comparator.comparingInt(distances::get));
+
+        distances.put(source, 0);
+        predecesseurs.put(source, null);
+        file.add(source);
+
+        while (!file.isEmpty()) {
+            T courant = file.poll();
+
+            if (visites.contains(courant)) continue;
+            visites.add(courant);
+
+            animateur.accept(courant, distances.get(courant));
+
+            for (Graph.Arc<T> arc : graphe.getSucc(courant)) {
+                T voisin = arc.dst();
+                int nouvelleDistance = distances.get(courant) + arc.val();
+
+                if (!distances.containsKey(voisin) || nouvelleDistance < distances.get(voisin)) {
+                    distances.put(voisin, nouvelleDistance);
+                    predecesseurs.put(voisin, courant);
+                    file.add(voisin);
+                }
+            }
+        }
+
+        return new Distances<>(distances, predecesseurs);
+    }
+}
