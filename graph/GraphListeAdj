@@ -13,8 +13,8 @@ public class GraphListeAdj<T> implements Graph<T> {
     }
 
     public void ajouterArc(T src, T dst, int val) {
-        ajouterSommet(src);
-        ajouterSommet(dst);
+        if (!adj.containsKey(src)) {ajouterSommet(src);}
+        if (!adj.containsKey(dst)) {ajouterSommet(dst);}
         adj.get(src).add(new Arc<>(val, dst));
     }
 
