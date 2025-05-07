@@ -1,0 +1,23 @@
+package adaptator;
+
+import graph.Graph;
+import maze.Maze;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class GraphMaze<C> implements Graph<C> {
+    private final Maze<C> maze;
+
+    public GraphMaze(Maze<C> maze) {
+        this.maze = maze;
+    }
+
+    @Override
+    public List<Arc<C>> getSucc(C s) {
+        // Les voisins ouverts sont transformés en arcs de valuation 1
+        return maze.openedNeighbours(s).stream()
+                .map(neighbor -> new Arc<>(1, neighbor))
+                .collect(Collectors.toList());
+    }
+}
