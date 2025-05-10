@@ -1,40 +1,32 @@
 package graph;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GrapheHHAdj implements VarGraph {
-    // Structure de liste d'adjacence : sommet -> liste des arcs sortants
-    private final Map<String, List<Arc<String>>> adjList = new HashMap<>();
 
-    @Override
-    public List<Arc<String>> getSucc(String s) {
-        return adjList.getOrDefault(s, new ArrayList<>());
-    }
+    private final Map<String, List<Arc<String>>> adjacence = new HashMap<>();
 
     @Override
     public void ajouterSommet(String noeud) {
-        // Ajoute un sommet s'il n'existe pas déjà
-        adjList.putIfAbsent(noeud, new ArrayList<>());
+        adjacence.putIfAbsent(noeud, new ArrayList<>());
     }
 
     @Override
     public void ajouterArc(String source, String destination, Integer valeur) {
-        // Ajoute les sommets s'ils n'existent pas
         ajouterSommet(source);
         ajouterSommet(destination);
 
-        // Vérifie si l'arc existe déjà
-        List<Arc<String>> arcs = adjList.get(source);
-        for (Arc<String> arc : arcs) {
+        List<Arc<String>> successeurs = adjacence.get(source);
+        for (Arc<String> arc : successeurs) {
             if (arc.dst().equals(destination)) {
-                throw new IllegalArgumentException("Arc déjà présent : " + source + " -> " + destination);
+                throw new IllegalArgumentException("Arc déjà présent entre " + source + " et " + destination);
             }
         }
+        successeurs.add(new Arc<>(valeur, destination));
+    }
 
-        // Ajoute l'arc
-        arcs.add(new Arc<>(valeur, destination));
+    @Override
+    public List<Arc<String>> getSucc(String s) {
+        return adjacence.getOrDefault(s, Collections.emptyList());
     }
 }
