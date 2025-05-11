@@ -5,16 +5,22 @@ import java.util.*;
 public class GraphListeAdj<T> implements Graph<T> {
 
     private final Map<T, List<Arc<T>>> adj;
+
     public GraphListeAdj() {
         adj = new HashMap<>();
     }
+
     public void ajouterSommet(T sommet) {
         adj.putIfAbsent(sommet, new ArrayList<>());
     }
 
     public void ajouterArc(T src, T dst, int val) {
-        if (!adj.containsKey(src)) {ajouterSommet(src);}
-        if (!adj.containsKey(dst)) {ajouterSommet(dst);}
+        if (!adj.containsKey(src)) {
+            ajouterSommet(src);
+        }
+        if (!adj.containsKey(dst)) {
+            ajouterSommet(dst);
+        }
         adj.get(src).add(new Arc<>(val, dst));
     }
 
