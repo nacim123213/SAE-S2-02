@@ -1,0 +1,9 @@
+package maze;
+
+import java.util.List;
+
+public interface Maze<C> {
+    List<C> openedNeighbours(C cell);
+    C getStart();
+    // Ajoute d'autres méthodes si nécessaires (ex. getEnd, loadFromFile)
+}
