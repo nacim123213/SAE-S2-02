@@ -5,6 +5,7 @@
            http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
+  
   <groupId>com.sae2025</groupId>
   <artifactId>sae-s2-02</artifactId>
   <version>1.0-SNAPSHOT</version>
@@ -13,20 +14,28 @@
   <packaging>jar</packaging>
 
   <properties>
-    <!-- Ajustez la version de Java si besoin -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <junit.jupiter.version>5.9.2</junit.jupiter.version>
   </properties>
 
   <dependencies>
-    <!-- JUnit 5 pour vos tests -->
+    <!-- JUnit 5 pour les tests unitaires -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
       <version>${junit.jupiter.version}</version>
       <scope>test</scope>
+    </dependency>
+
+    <!-- maze.jar en dépendance système -->
+    <dependency>
+      <groupId>com.maze</groupId>
+      <artifactId>maze</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/maze.jar</systemPath>
     </dependency>
   </dependencies>
 
@@ -42,6 +51,7 @@
           <encoding>${project.build.sourceEncoding}</encoding>
         </configuration>
       </plugin>
+
       <!-- Exécution des tests JUnit 5 -->
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -51,6 +61,39 @@
             <include>**/*Test.java</include>
           </includes>
         </configuration>
+      </plugin>
+
+      <!-- Lancement de Checker et Animation via Maven -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <id>run-checker</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>java</goal>
+            </goals>
+            <configuration>
+              <mainClass>applications.Checker</mainClass>
+              <includeProjectDependencies>true</includeProjectDependencies>
+              <includePluginDependencies>false</includePluginDependencies>
+            </configuration>
+          </execution>
+          <execution>
+            <id>run-animation</id>
+            <phase>none</phase>
+            <goals>
+              <goal>java</goal>
+            </goals>
+            <configuration>
+              <mainClass>applications.Animation</mainClass>
+              <includeProjectDependencies>true</includeProjectDependencies>
+              <includePluginDependencies>false</includePluginDependencies>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
