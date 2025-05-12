@@ -1,37 +1,31 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="
-           http://maven.apache.org/POM/4.0.0 
-           http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
-  
-  <groupId>com.sae2025</groupId>
-  <artifactId>sae-s2-02</artifactId>
+
+  <groupId>fr.univ</groupId>
+  <artifactId>sae2.02</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>SAE-S2-02 – Graphes et Labyrinthes</name>
-  <description>Implémentation de Dijkstra et adaptateur Labyrinthe</description>
-  <packaging>jar</packaging>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
-    <junit.jupiter.version>5.9.2</junit.jupiter.version>
   </properties>
 
   <dependencies>
-    <!-- JUnit 5 pour les tests unitaires -->
+    <!-- JUnit 5 -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
-      <version>${junit.jupiter.version}</version>
+      <version>5.10.0</version>
       <scope>test</scope>
     </dependency>
 
-    <!-- maze.jar en dépendance système -->
+    <!-- maze.jar en tant que dépendance locale -->
     <dependency>
-      <groupId>com.maze</groupId>
+      <groupId>maze</groupId>
       <artifactId>maze</artifactId>
       <version>1.0</version>
       <scope>system</scope>
@@ -41,61 +35,42 @@
 
   <build>
     <plugins>
-      <!-- Compilation Java -->
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.11.0</version>
-        <configuration>
-          <source>${maven.compiler.source}</source>
-          <target>${maven.compiler.target}</target>
-          <encoding>${project.build.sourceEncoding}</encoding>
-        </configuration>
-      </plugin>
-
-      <!-- Exécution des tests JUnit 5 -->
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.1.2</version>
-        <configuration>
-          <includes>
-            <include>**/*Test.java</include>
-          </includes>
-        </configuration>
-      </plugin>
-
-      <!-- Lancement de Checker et Animation via Maven -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>3.1.0</version>
         <executions>
+          <!-- Checker -->
           <execution>
             <id>run-checker</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>java</goal>
-            </goals>
+            <goals><goal>java</goal></goals>
             <configuration>
               <mainClass>applications.Checker</mainClass>
+              <classpathScope>compile</classpathScope>
               <includeProjectDependencies>true</includeProjectDependencies>
               <includePluginDependencies>false</includePluginDependencies>
+              <additionalClasspathElements>
+                <additionalClasspathElement>${project.basedir}/lib/maze.jar</additionalClasspathElement>
+              </additionalClasspathElements>
             </configuration>
           </execution>
+
+          <!-- Animation -->
           <execution>
             <id>run-animation</id>
-            <phase>none</phase>
-            <goals>
-              <goal>java</goal>
-            </goals>
+            <goals><goal>java</goal></goals>
             <configuration>
               <mainClass>applications.Animation</mainClass>
+              <classpathScope>compile</classpathScope>
               <includeProjectDependencies>true</includeProjectDependencies>
               <includePluginDependencies>false</includePluginDependencies>
+              <additionalClasspathElements>
+                <additionalClasspathElement>${project.basedir}/lib/maze.jar</additionalClasspathElement>
+              </additionalClasspathElements>
             </configuration>
           </execution>
         </executions>
       </plugin>
     </plugins>
   </build>
-
 </project>

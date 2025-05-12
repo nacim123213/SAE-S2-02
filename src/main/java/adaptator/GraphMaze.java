@@ -1,7 +1,6 @@
 package adaptator;
 
 import graph.Graph;
-import graph.Graph.Arc;
 import maze.Maze;
 import java.util.ArrayList;
 import java.util.List;
