@@ -17,16 +17,6 @@ Objectifs :
 
 ---
 
-## 🧑‍💻 Membres du groupe 101
-
-- CHERADI Nacim 
-- BENMOUMENE Moussa
-- RAHOU Wallid
-- GHANEMI AbdelHafid
-- AKLOUF Imadeddine
-
----
-
 ## ⚙️ Prérequis
 
 - **Java JDK 21** → [https://jdk.java.net/21](https://jdk.java.net/21)
